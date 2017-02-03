@@ -1,5 +1,7 @@
 # rogue-ng
 
+** Current Status: Work in progress. Nothing works or intended to. Please come back later **
+
 To run:
 
 1. install dependencies (support using a virtualenv, but up to you)
