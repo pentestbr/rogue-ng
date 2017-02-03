@@ -1,6 +1,6 @@
 # rogue-ng
 
-** Current Status: Work in progress. Nothing works or intended to. Please come back later **
+**Current Status: Work in progress. Nothing works or intended to. Please come back later**
 
 To run:
 
