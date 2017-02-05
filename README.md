@@ -9,7 +9,7 @@ To run:
 
 2. the core server can be run using ./core.py
 
-3. the text based UI can be run using ./ui.py
+3. the text based console can be run using ./rogue-console.py
 
 4. the command line can be run using ./cmd-line.py
 
