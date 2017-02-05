@@ -20,6 +20,7 @@ class Command:
 
 	def intro(self):
 		f = Figlet()
+		print ''
 		print 'Welcome to:'
 		print f.renderText('rogue-ng')
 		print 'Configured server: '+ self.core_url
@@ -29,6 +30,8 @@ class Command:
 		else:
 			status = 'Not connected'
 		print 'Connection status: '+status
+		print ''
+		print 'Use \'help\' to see commands'
 
 	def get_command(self):
 		prompt = 'rogue-ng> '
