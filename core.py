@@ -1,16 +1,8 @@
 #!/usr/bin/python
 
-from flask import Flask
+from core import RogueApi
 
-app = Flask(__name__)
-
-
-@app.route('/rogue-ng/api/v1.0/status', methods=['GET'])
-def get_status():
-	return 'Up and running capt\'n'
-
-
+api = RogueApi()
 
 if __name__ == '__main__':
-	app.run(debug=True)
-
+	api.run()

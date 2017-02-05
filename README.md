@@ -4,7 +4,7 @@
 
 To run:
 
-1. install dependencies (support using a virtualenv, but up to you)
+1. install dependencies (suggest using a virtualenv, but up to you)
 	pip install -r requirements.txt
 
 2. the core server can be run using ./core.py
