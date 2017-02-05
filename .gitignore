@@ -1,1 +1,5 @@
 rogue-env
+*.pyc
+*.swp
+*.swap
+*.save

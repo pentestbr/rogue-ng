@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
-import curses
-
-def runUI (__self__):
-	scr = curses.initscr()
+from curses import wrapper
+from ux import MainScreen
 
 
+app = MainScreen()
 
-
-curses.wrapper(runUI)
+if __name__ == '__main__':
+	wrapper(app.run)

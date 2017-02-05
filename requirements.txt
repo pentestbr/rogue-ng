@@ -4,10 +4,12 @@ click==6.7
 Flask==0.12
 Flask-RESTful==0.3.5
 flask-restful-swagger==0.19
+httplib2==0.10.2
 itsdangerous==0.24
 Jinja2==2.9.5
 MarkupSafe==0.23
 packaging==16.8
+pyfiglet==0.7.5
 pyparsing==2.1.10
 python-dateutil==2.6.0
 pytz==2016.10
