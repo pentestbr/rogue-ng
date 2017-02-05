@@ -3,12 +3,15 @@ from pyfiglet import Figlet
 from core import ApiClient
 from commands import Help, Status, Quit
 
+from commands import Test
+
 class Command:
 
 	def init_commands(self):
 		self.cmd_handlers = {
 			'help': Help(),
 			'status': Status(),
+			'test': Test(),
 			'quit': Quit(),
 			'exit': Quit()
 		}
@@ -39,7 +42,10 @@ class Command:
 		cmd = raw_input(prompt)
 		return cmd
 
-	def execute_command(self, cmd):
+	def execute_command(self, line):
+		words = line.split()
+		cmd = words[0]
+		params = words[1:]
 		try:
 			handler = self.cmd_handlers[cmd]
 			handler.console = self
@@ -48,7 +54,7 @@ class Command:
 				print 'Unknown cmd \'',cmd,'\''
 		else:
 			print ''
-			handler.execute()
+			handler.process(cmd, params)
 			print ''
 
 	def run(self):
