@@ -36,8 +36,12 @@ class Command:
 		return cmd
 
 	def execute_command(self, cmd):
-		handler = self.cmd_handlers[cmd]
-		handler.execute()
+		try:
+			handler = self.cmd_handlers[cmd]
+		except KeyError:
+			print 'Unknown cmd \'',cmd,'\''
+		else:
+			handler.execute()
 
 
 	def run(self):
