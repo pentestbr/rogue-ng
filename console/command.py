@@ -1,13 +1,14 @@
 from pyfiglet import Figlet
 
 from core import ApiClient
-from commands import Help, Quit
+from commands import Help, Status, Quit
 
 class Command:
 
 	def init_commands(self):
 		self.cmd_handlers = {
 			'help': Help(),
+			'status': Status(),
 			'quit': Quit(),
 			'exit': Quit()
 		}
@@ -41,11 +42,14 @@ class Command:
 	def execute_command(self, cmd):
 		try:
 			handler = self.cmd_handlers[cmd]
+			handler.console = self
 		except KeyError:
-			print 'Unknown cmd \'',cmd,'\''
+			if cmd != '':
+				print 'Unknown cmd \'',cmd,'\''
 		else:
+			print ''
 			handler.execute()
-
+			print ''
 
 	def run(self):
 		self.intro()
