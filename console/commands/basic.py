@@ -21,9 +21,15 @@ class Help(BaseCommand):
 	def execute(self):
 		print 'recon-ng 2017'
 		print 'Useful commands:'
-		print '\thelp        Pretty frickin obvious. You typed it to get here'
-		print '\tquit        Exits the console (also \'exit\')'
-		print '\tstatus      Shows status of connection to server'
+		print '\thelp           Pretty frickin obvious. You typed it to get here'
+		print '\tquit           Exits the console (also \'exit\')'
+		print ''
+		print 'Server commmands:'
+		print '\tserver <url>   Sets the server url to connect to'
+		print '\tstatus         Shows the status of the server'
+		print '\tstart          Starts the server\'s hotspot'
+		print '\tstop           Stops the server\'s hotspot'
+
 class Quit(BaseCommand):
 	def execute(self):
 		sys.exit()

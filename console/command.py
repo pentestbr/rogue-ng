@@ -2,16 +2,17 @@ from pyfiglet import Figlet
 
 from core import ApiClient
 from commands import Help, Status, Quit
-
-from commands import Test
+from commands import Start, Stop, ServerUrl
 
 class Command:
 
 	def init_commands(self):
 		self.cmd_handlers = {
 			'help': Help(),
+			'server': ServerUrl(),
+			'start': Start(),
+			'stop': Stop(),
 			'status': Status(),
-			'test': Test(),
 			'quit': Quit(),
 			'exit': Quit()
 		}
