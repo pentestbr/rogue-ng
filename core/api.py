@@ -2,17 +2,21 @@ from flask import Flask, jsonify
 from flask_restful import Api
 from flask_restful_swagger import swagger
 
-from resources import Status
+from resources import status, request
 from server import Server
 
 class RogueApi:
+
+	resources = [{'handler': status.Status, 'path': '/api/status'},
+		     {'handler': request.Request, 'path': '/api/requests'}]
 
 	def __init__(self):
 		self.server = Server()
 
 	def run(self):
 		self.app = Flask(__name__)
-		self.api = swagger.docs(Api(self.app), apiVersion="0.1")
+		self.api = swagger.docs(Api(self.app), apiVersion='0.1',
+						       api_spec_url='/api/rogue-ng')
 
 		self.add_resources()
 
@@ -20,7 +24,7 @@ class RogueApi:
 		self.app.run(debug=True, host="0.0.0.0")
 
 	def add_resources(self):
-		self.api.add_resource(Status,
-                                      "/api/status",
-                                      resource_class_kwargs={'server': self.server})
-
+		for resource in RogueApi.resources:
+			self.api.add_resource(resource['handler'],
+					      resource['path'],
+					      resource_class_kwargs={'server':self.server})
