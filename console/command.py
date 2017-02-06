@@ -17,6 +17,8 @@ class Command:
 			'exit': Quit()
 		}
 
+		for cmd in self.cmd_handlers:
+			self.cmd_handlers[cmd].console = self
 
 	def __init__(self):
 		self.core_url = 'http://localhost:5000/api'
@@ -28,13 +30,7 @@ class Command:
 		print ''
 		print 'Welcome to:'
 		print f.renderText('rogue-ng')
-		print 'Configured server: '+ self.core_url
-
-		if self.client.check_status():
-			status = 'Connected'
-		else:
-			status = 'Not connected'
-		print 'Connection status: '+status
+		self.cmd_handlers['status'].execute()
 		print ''
 		print 'Use \'help\' to see commands'
 
@@ -49,7 +45,6 @@ class Command:
 		params = words[1:]
 		try:
 			handler = self.cmd_handlers[cmd]
-			handler.console = self
 		except KeyError:
 			if cmd != '':
 				print 'Unknown cmd \'',cmd,'\''

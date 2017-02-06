@@ -1,4 +1,5 @@
 import httplib2
+import json
 
 class ApiClient:
 
@@ -12,9 +13,6 @@ class ApiClient:
 	def check_status(self):
 		try:
 			response, content = self.get('/status')
-			if response['status'] == '200':
-				return True
-			else:
-				return False
+			return json.loads(content)
 		except:
-			return False
+			return { 'status': 'down', 'enabled': 'unlikely' }

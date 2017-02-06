@@ -3,8 +3,11 @@ from flask_restful_swagger import swagger
 
 class Status(Resource):
 
+	def __init__(self, **kwargs):
+		self.server = kwargs['server']
+
 	@swagger.operation(
-		notes='A quick and easy test of whether the core server is live',
+		notes='Gets the current server status',
 		nickname='Server Status',
 		responseMessages=[
 			{
@@ -14,4 +17,5 @@ class Status(Resource):
 		]
 		)
 	def get(self):
-		return {'status':'live'}
+		return {'status': 'Live',
+			'enabled': self.server.enabled}

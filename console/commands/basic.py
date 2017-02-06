@@ -38,12 +38,10 @@ class Quit(BaseCommand):
 class Status(BaseCommand):
 	def execute(self):
 		client = ApiClient(self.console.core_url)
-		if client.check_status():
-			status = "Connected"
-		else:
-			status = "Not connected"
+		status = client.check_status()
 		print 'Configured server: ', self.console.core_url
-		print 'Connection status: ', status
+		print 'Connection status: ', status['status']
+		print 'Server running   : ', status['enabled']
 
 class Test(BaseCommand):
 	def __init__(self):
