@@ -61,7 +61,6 @@ class Request(Resource):
 		])
 	@marshal_with(RequestModel.resource_fields)
 	def post(self):
-#		req = request.get_json()
 		args = self.create_parser.parse_args()
 		action = args['action']
-		return  self.server.create_request(action), 201
+		return self.server.create_request(action), 201
