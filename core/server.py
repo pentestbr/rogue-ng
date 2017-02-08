@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from requests import RequestProcessor
 
 class Server:
@@ -14,6 +16,7 @@ class Server:
 			else:
 				id = int(max(self.requests.keys()))+1
 			req = {'id': id,
+				'created': datetime.now(),
 			       'action': action,
 			       'complete': False}
 			self.requests[id] = req
