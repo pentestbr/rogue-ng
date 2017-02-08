@@ -16,7 +16,7 @@ To run:
 see the various help info for details (-h)
 if the interface are not told which core to use then they use localhost (starting one if necessary)
 
-the swagger api can be seen on the core server in /api/spec.html
+the swagger api can be seen on the core server in /api/rogue-ng.html
 
  
 >*I don't feel no more,*
