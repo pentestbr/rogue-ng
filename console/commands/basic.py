@@ -3,22 +3,16 @@ from core import ApiClient
 
 class BaseCommand:
 
-	def __init__(self):
-		self.no_of_params = 0
-
 	def process(self, cmd, params):
-		if len(params) != self.no_of_params:
-			print 'Invalid number of parameters, expecting', self.no_of_params
+		self.cmd = cmd
+		if not params:
+			self.execute()
 		else:
-			self.cmd = cmd
-			if not params:
-				self.execute()
-			else:
-				self.execute(params)
+			self.execute(params)
 
 
 class Help(BaseCommand):
-	def execute(self):
+	def execute(self, params=None):
 		print 'recon-ng 2017'
 		print 'Useful commands:'
 		print '\thelp           Pretty frickin obvious. You typed it to get here'
@@ -29,14 +23,18 @@ class Help(BaseCommand):
 		print '\tstatus         Shows the status of the server'
 		print '\tstart          Starts the server\'s hotspot'
 		print '\tstop           Stops the server\'s hotspot'
+		print ''
+		print 'Config commands:'
+		print '\tconfig [all|module|field]   Configures the relevent area'
+		print '\tinfo   [all|module|field]   Shows config for relevent area'
 
 class Quit(BaseCommand):
-	def execute(self):
+	def execute(self, params=None):
 		sys.exit()
 
 
 class Status(BaseCommand):
-	def execute(self):
+	def execute(self, params=None):
 		client = ApiClient(self.console.core_url)
 		status = client.check_status()
 		print 'Configured server: ', self.console.core_url
@@ -44,8 +42,5 @@ class Status(BaseCommand):
 		print 'Server running   : ', status['enabled']
 
 class Test(BaseCommand):
-	def __init__(self):
-		self.no_of_params = 2
-
-	def execute(self, params):
+	def execute(self, params=None):
 		print 'params sent are: ',params

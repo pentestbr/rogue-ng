@@ -3,6 +3,7 @@ from pyfiglet import Figlet
 from core import ApiClient
 from commands import Help, Status, Quit
 from commands import Start, Stop, ServerUrl
+from commands import Config
 
 class Command:
 
@@ -14,7 +15,8 @@ class Command:
 			'stop': Stop(),
 			'status': Status(),
 			'quit': Quit(),
-			'exit': Quit()
+			'exit': Quit(),
+			'config': Config()
 		}
 
 		for cmd in self.cmd_handlers:
