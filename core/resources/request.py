@@ -64,4 +64,4 @@ class Request(Resource):
 #		req = request.get_json()
 		args = self.create_parser.parse_args()
 		action = args['action']
-		return  self.server.create_request(action)
+		return  self.server.create_request(action), 201
