@@ -20,10 +20,10 @@ class ServerOps(base):
 			print 'No connection to server'
 			return False
 		elif status['enabled'] and not state:
-			print 'Server is not running'
+			print 'Server is alreadyrunning'
 			return False
 		elif not status['enabled'] and state:
-			print 'Server is already running'
+			print 'Server is not running'
 			return False
 		else:
 			return True

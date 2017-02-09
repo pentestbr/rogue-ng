@@ -1,6 +1,8 @@
 import httplib2
 import json
 
+from exceptions import RogueError
+
 class ApiClient:
 
 	def __init__(self, url):
@@ -10,8 +12,13 @@ class ApiClient:
 	def get(self, path):
 		return self.http.request(self.url+path, 'GET')
 
-	def port(self, path, content):
-		return self.http.request(self.url+path, 'POST', content)
+	def post(self, path, content):
+			return self.http.request(
+				uri=self.url+path,
+				method='POST',
+				headers={'Content-Type': 'application/json; charset=UTF-8'},
+				body=json.dumps(content),
+			)
 
 	def check_status(self):
 		try:
@@ -20,8 +27,16 @@ class ApiClient:
 		except:
 			return { 'status': 'down', 'enabled': 'unlikely' }
 
+	def request(self, request):
+		response, content = self.post('/requests', request)
+		if response.status == 201:
+			return json.loads(content)
+		else:
+			raise RogueError('Server responded to what should have been '
+					 'a valid error with '+str(response.status))
+
 	def request_start(self):
-		pass
+		self.request( { 'action': 'start' } )
 
 	def request_stop(self):
-		pass
+		self.request( { 'action': 'stop' } )
