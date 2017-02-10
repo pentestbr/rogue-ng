@@ -2,6 +2,7 @@ from pyfiglet import Figlet
 import readline
 
 from core import ApiClient
+from completer import RogueCompleter
 from commands import Help, Status, Quit
 from commands import Start, Stop, ServerUrl
 from commands import Config, Use, Remove
@@ -25,10 +26,16 @@ class Command:
 		for cmd in self.cmd_handlers:
 			self.cmd_handlers[cmd].console = self
 
+	def init_completion(self):
+		readline.parse_and_bind('tab: complete')
+		completer = RogueCompleter(self.cmd_handlers.keys())
+		readline.set_completer(completer.complete)
+
 	def __init__(self):
 		self.core_url = 'http://localhost:5000/api'
 		self.client = ApiClient(self.core_url)
 		self.init_commands()
+		self.init_completion()
 
 	def intro(self):
 		f = Figlet()
@@ -63,4 +70,4 @@ class Command:
 		self.intro()
 		while True:
 			cmd = self.get_command()
-			self.execute_command(cmd)
+			if cmd: self.execute_command(cmd)
