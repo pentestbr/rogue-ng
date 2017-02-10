@@ -3,12 +3,23 @@ from datetime import datetime
 from exceptions import InvalidActionException
 from request_processing import RequestProcessor
 
+from modules.hotspot import Hotspot 
+
 class Server:
+
+	
 
 	def __init__(self):
 		self.enabled = False #todo: detect rather than insist
 		self.request_processor = RequestProcessor()
 		self.modules={}
+		self.load_modules()
+
+
+	def load_modules(self):
+		self.available_modules = {
+			'hotspot': Hotspot()
+		}
 
 	def create_request(self, action):
 		if self.request_processor.isValid(action):
@@ -35,3 +46,6 @@ class Server:
 
 	def get_modules(self):
 		return self.modules.values()
+
+	def get_available_module(self):
+		return self.available_modules.keys()
