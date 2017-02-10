@@ -1,9 +1,12 @@
 class RequestProcessor:
 
+	def __init__(self):
+		self.requests = {}
+
 	def start(self):
 		pass
 
-	def stop(serlf):
+	def stop(self):
 		pass
 
 	actions = { 'start': start,

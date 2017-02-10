@@ -3,7 +3,7 @@ from pyfiglet import Figlet
 from core import ApiClient
 from commands import Help, Status, Quit
 from commands import Start, Stop, ServerUrl
-from commands import Config
+from commands import Config, Use, Remove
 
 class Command:
 
@@ -16,7 +16,9 @@ class Command:
 			'status': Status(),
 			'quit': Quit(),
 			'exit': Quit(),
-			'config': Config()
+			'config': Config(),
+			'use': Use(),
+			'remove': Remove()
 		}
 
 		for cmd in self.cmd_handlers:
@@ -32,6 +34,7 @@ class Command:
 		print ''
 		print 'Welcome to:'
 		print f.renderText('rogue-ng')
+		print ''
 		self.cmd_handlers['status'].execute()
 		print ''
 		print 'Use \'help\' to see commands'
@@ -51,9 +54,9 @@ class Command:
 			if cmd != '':
 				print 'Unknown cmd \'',cmd,'\''
 		else:
-			print ''
+			#print ''
 			handler.process(cmd, params)
-			print ''
+			#print ''
 
 	def run(self):
 		self.intro()

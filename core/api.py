@@ -3,13 +3,14 @@ from flask_restful import Api
 from flask_restful_swagger import swagger
 
 from errors import errors
-from resources import status, request
+from resources import status, request, module
 from server import Server
 
 class RogueApi:
 
 	resources = [{'handler': status.Status, 'path': '/api/status'},
-		     {'handler': request.Request, 'path': '/api/requests'}]
+		     {'handler': request.Request, 'path': '/api/requests'},
+		     {'handler': module.Module, 'path': '/api/modules'}]
 
 	def __init__(self):
 		self.server = Server()
@@ -18,7 +19,8 @@ class RogueApi:
 		self.app = Flask(__name__)
 		self.api = swagger.docs(Api(self.app, errors=errors),
 					  apiVersion='0.1',
-					  api_spec_url='/api/rogue-ng')
+					  api_spec_url='/api/rogue-ng',
+					  description='Rogue-NG, the evilest of evil hotspots')
 
 		self.add_resources()
 

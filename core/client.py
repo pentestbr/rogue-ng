@@ -20,6 +20,16 @@ class ApiClient:
 				body=json.dumps(content),
 			)
 
+	def load_module(self, name):
+		response, content = self.post('/modules', {'name': name})
+		if response.status == 201:
+			return 'Added', name, 'to activate modules'
+		elif response.status == 400:
+			return 'Unknown module:', name
+		else:
+			raise RogueError('Unexpected response from server: '
+					 + str(response.status))
+
 	def check_status(self):
 		try:
 			response, content = self.get('/status')
