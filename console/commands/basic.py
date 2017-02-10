@@ -10,6 +10,7 @@ class BaseCommand:
 		else:
 			self.execute(params)
 
+	def complete(self, line, text): return []
 
 class Help(BaseCommand):
 	def execute(self, params=None):

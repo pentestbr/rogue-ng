@@ -29,7 +29,7 @@ class Command:
 	def init_completion(self):
 		readline.parse_and_bind('tab: complete')
 		completer = RogueCompleter(self.cmd_handlers.keys())
-		readline.set_completer(completer.complete)
+		readline.set_completer(RogueCompleter(self.cmd_handlers).complete)
 
 	def __init__(self):
 		self.core_url = 'http://localhost:5000/api'
