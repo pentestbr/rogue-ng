@@ -41,8 +41,8 @@ class Server:
 	def get_requests(self):
 		return self.request_processor.requests.values()
 
-	def update_module(self, name, config):
-		module = {'name':name, 'config':config, 'used': True}
+	def update_module(self, name, config, used):
+		module = {'name':name, 'config':config, 'used': used}
 		self.modules[name] = module
 		return module
 

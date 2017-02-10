@@ -12,30 +12,32 @@ class ApiClient:
 	def get(self, path):
 		return self.http.request(self.url+path, 'GET')
 
-	def putpost(self, path, content):
+	def putpost(self, path, content, type):
 			return self.http.request(
 				uri=self.url+path,
-				method='POST',
+				method=type,
 				headers={'Content-Type': 'application/json; charset=UTF-8'},
 				body=json.dumps(content),
 			)
 
 	def put(self, path, content):
-		return self.putpost(self, path, content, 'PUT')
+		return self.putpost(path, content, 'PUT')
 
 	def post(self, path, content):
-		return self.putpost(self, path, content, 'POST')
+		return self.putpost(path, content, 'POST')
 
 
 	def load_module(self, name):
-		response, content = self.post('/modules', {'name': name, 'used':True})
+		response, content = self.put('/modules', {'name': name, 'used':True})
 		if response.status == 201:
 			return None
 		elif response.status == 400:
 			return 'Unknown module:', name
 		else:
+			print content
 			raise RogueError('Unexpected response from server: '
 					 + str(response.status))
+
 	def list_modules(self):
 		response, content = self.get('/modules')
 		return [mod['name'] for mod in json.loads(content)]

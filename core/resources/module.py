@@ -17,6 +17,7 @@ class ModuleList(Resource):
 						help='Required field', 
 						required=True)
 		self.create_parser.add_argument('config')
+		self.create_parser.add_argument('used')
 
         @swagger.operation(
                 notes='Lists the current modules',
@@ -59,7 +60,8 @@ class ModuleList(Resource):
 		args = self.create_parser.parse_args()
 		name = args['name']
 		config = args['config']
-		return self.server.update_module(name, config), 201
+		used = args['used']
+		return self.server.update_module(name, config, used), 201
 
 class Module(Resource):
 
