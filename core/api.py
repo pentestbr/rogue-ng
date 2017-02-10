@@ -10,7 +10,8 @@ class RogueApi:
 
 	resources = [{'handler': status.Status, 'path': '/api/status'},
 		     {'handler': request.Request, 'path': '/api/requests'},
-		     {'handler': module.Module, 'path': '/api/modules'}]
+		     {'handler': module.ModuleList, 'path': '/api/modules'},
+		     {'handler': module.Module, 'path': '/api/modules/<name>'}]
 
 	def __init__(self):
 		self.server = Server()

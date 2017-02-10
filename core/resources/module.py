@@ -1,14 +1,15 @@
-from flask_restful import fields, marshal_with, reqparse, request, Resource 
+from flask_restful import fields, marshal_with, abort, reqparse, request, Resource 
 from flask_restful_swagger import swagger
 
 @swagger.model
 class ModuleModel:
         resource_fields = {
                 'name': fields.String,
-                'config': fields.String,
+		'used': fields.Boolean,
+                'config': fields.String
         }
 
-class Module(Resource):
+class ModuleList(Resource):
         def __init__(self, **kwargs):
                 self.server = kwargs['server']
 		self.create_parser = reqparse.RequestParser()
@@ -30,10 +31,9 @@ class Module(Resource):
 	@marshal_with(ModuleModel.resource_fields)
 	def get(self):
 		return self.server.get_modules()
-
 	@swagger.operation(
-		notes='Adds a module to the list of current running modules',
-		nickname='Add module',
+		notes='Updates a module, most commonly to set to be used or configured',
+		nickname='Update module',
 		parameters=[
 		{
 			'name': 'body',
@@ -47,7 +47,7 @@ class Module(Resource):
 		responseMessages=[
 			{
 				'code': 201,
-				'message': 'Module added'
+				'message': 'Module updated'
 			},
 			{
 				'code': 400,
@@ -55,8 +55,35 @@ class Module(Resource):
 			}
 		])
 	@marshal_with(ModuleModel.resource_fields)
-	def post(self):
+	def put(self):
 		args = self.create_parser.parse_args()
 		name = args['name']
 		config = args['config']
-		return self.server.add_module(name, config), 201
+		return self.server.update_module(name, config), 201
+
+class Module(Resource):
+
+	def __init__(self, **kwargs):
+		self.server = kwargs['server']
+
+	@swagger.operation(
+		notes='Retrieves a specific module',
+		nickname='Get Module',
+		responseClass=ModuleModel.__name__,
+		responseMessages=[
+			{
+				'code': 200,
+				'message': 'Module retrived'
+			},
+			{
+				'code': 404,
+				'message': 'Module with that name not found'
+			}
+		]
+	)
+	@marshal_with(ModuleModel.resource_fields)
+	def get(self, name):
+		if name in self.server.modules:
+			return self.server.modules[name], 200
+		else:
+			abort(404, message='Module {} does not exist'.format(name))

@@ -17,9 +17,11 @@ class Server:
 
 
 	def load_modules(self):
-		self.available_modules = {
+		self.module_handlers = {
 			'hotspot': Hotspot()
 		}
+		for name in self.module_handlers.keys():
+			self.modules[name] = {'name':name, 'config':None, 'used':False}
 
 	def create_request(self, action):
 		if self.request_processor.isValid(action):
@@ -39,13 +41,11 @@ class Server:
 	def get_requests(self):
 		return self.request_processor.requests.values()
 
-	def add_module(self, name, config):
-		module = {'name':name, 'config':config}
+	def update_module(self, name, config):
+		module = {'name':name, 'config':config, 'used': True}
 		self.modules[name] = module
 		return module
 
 	def get_modules(self):
 		return self.modules.values()
 
-	def get_available_module(self):
-		return self.available_modules.keys()

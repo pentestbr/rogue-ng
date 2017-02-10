@@ -12,7 +12,7 @@ class ApiClient:
 	def get(self, path):
 		return self.http.request(self.url+path, 'GET')
 
-	def post(self, path, content):
+	def putpost(self, path, content):
 			return self.http.request(
 				uri=self.url+path,
 				method='POST',
@@ -20,10 +20,17 @@ class ApiClient:
 				body=json.dumps(content),
 			)
 
+	def put(self, path, content):
+		return self.putpost(self, path, content, 'PUT')
+
+	def post(self, path, content):
+		return self.putpost(self, path, content, 'POST')
+
+
 	def load_module(self, name):
-		response, content = self.post('/modules', {'name': name})
+		response, content = self.post('/modules', {'name': name, 'used':True})
 		if response.status == 201:
-			return 'Added', name, 'to activate modules'
+			return None
 		elif response.status == 400:
 			return 'Unknown module:', name
 		else:
