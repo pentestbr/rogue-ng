@@ -4,7 +4,12 @@ from core import ApiClient
 class Config(base):
 
 	def __init__(self):
-		self.modules = ['hotspot', 'fucker']
+		self.modules = []
+
+	def reload(self):
+		client = ApiClient(self.console.core_url)
+		self.modules = client.list_modules()
+		print 'Just reloaded module list: {}'.format(self.modules)
 
 	def execute(self, params=None):
 		print "config: ", params

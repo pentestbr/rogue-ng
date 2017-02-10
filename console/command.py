@@ -33,9 +33,15 @@ class Command:
 
 	def __init__(self):
 		self.core_url = 'http://localhost:5000/api'
-		self.client = ApiClient(self.core_url)
 		self.init_commands()
 		self.init_completion()
+		self.new_server_connection()
+
+	def new_server_connection(self):
+		client = ApiClient(self.core_url)
+		if client.check_status()['status'] == 'Live':
+			self.cmd_handlers['use'].reload()
+
 
 	def intro(self):
 		f = Figlet()

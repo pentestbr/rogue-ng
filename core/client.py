@@ -36,6 +36,9 @@ class ApiClient:
 		else:
 			raise RogueError('Unexpected response from server: '
 					 + str(response.status))
+	def list_modules(self):
+		response, content = self.get('/modules')
+		return [mod['name'] for mod in json.loads(content)]
 
 	def check_status(self):
 		try:
