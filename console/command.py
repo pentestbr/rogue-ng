@@ -1,4 +1,5 @@
 from pyfiglet import Figlet
+import readline
 
 from core import ApiClient
 from commands import Help, Status, Quit
