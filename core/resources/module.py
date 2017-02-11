@@ -47,7 +47,7 @@ class ModuleList(Resource):
 		],
 		responseMessages=[
 			{
-				'code': 201,
+				'code': 200,
 				'message': 'Module updated'
 			},
 			{
@@ -61,7 +61,7 @@ class ModuleList(Resource):
 		name = args['name']
 		config = args['config']
 		used = args['used']
-		return self.server.update_module(name, config, used), 201
+		return self.server.update_module(name, config, used), 200
 
 class Module(Resource):
 

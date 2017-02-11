@@ -29,7 +29,7 @@ class ApiClient:
 
 	def load_module(self, name):
 		response, content = self.put('/modules', {'name': name, 'used':True})
-		if response.status == 201:
+		if response.status == 200:
 			return None
 		elif response.status == 400:
 			return 'Unknown module:', name
