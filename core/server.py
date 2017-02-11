@@ -14,6 +14,10 @@ class Server:
 		self.request_processor = RequestProcessor()
 		self.modules={}
 		self.load_modules()
+		self.set_default_modules()
+
+	def set_default_modules(self):
+		self.modules['hotspot']['used'] = True
 
 
 	def load_modules(self):

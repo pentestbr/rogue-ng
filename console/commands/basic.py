@@ -45,6 +45,9 @@ class Status(BaseCommand):
 		print 'Configured server: ', self.console.core_url
 		print 'Connection status: ', status['status']
 		print 'Server running   : ', status['enabled']
+		print 'Modules enabled  :'
+		for mod in status['modules']:
+			print '\t {}'.format(mod)
 
 class Test(BaseCommand):
 	def execute(self, params=None):

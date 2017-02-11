@@ -17,5 +17,7 @@ class Status(Resource):
 		]
 		)
 	def get(self):
+		modules = [ x['name'] for x in self.server.modules.values() if x['used']]
 		return {'status': 'Live',
-			'enabled': self.server.enabled}
+			'enabled': self.server.enabled,
+			'modules': modules}
