@@ -5,3 +5,6 @@ class InvalidActionException(HTTPException):
 
 class RogueError(Exception):
 	pass
+
+class UnknownModule(HTTPException):
+	pass

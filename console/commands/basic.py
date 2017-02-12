@@ -6,9 +6,10 @@ class BaseCommand:
 	def process(self, cmd, params):
 		self.cmd = cmd
 		if not params:
-			self.execute()
+			msg = self.execute()
 		else:
-			self.execute(params)
+			msg = self.execute(params)
+		if msg: print msg
 
 	def complete(self, line, text): return []
 

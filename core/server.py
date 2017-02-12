@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from exceptions import InvalidActionException
+from exceptions import InvalidActionException, UnknownModule
 from request_processing import RequestProcessor
 
 import modules
@@ -12,10 +12,6 @@ class Server:
 		self.request_processor = RequestProcessor()
 		self.modules={}
 		self.load_modules()
-		self.set_default_modules()
-
-	def set_default_modules(self):
-		self.modules['hotspot']['used'] = True
 
 
 	def load_modules(self):
@@ -46,6 +42,7 @@ class Server:
 		return self.request_processor.requests.values()
 
 	def update_module(self, name, config, used):
+		if name not in self.modules.keys(): raise UnknownModule(name)
 		module = {'name':name, 'config':config, 'used': used}
 		self.modules[name] = module
 		return module

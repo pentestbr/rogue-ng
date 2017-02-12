@@ -26,15 +26,22 @@ class Config(base):
 			print 'No connection to server. Check url.'
 			return False
 
+	def complete(self, line, text):
+		return self.match_modules(text)
+
 class Use(Config):
 	def execute(self, params=None):
 		if self.check_status():
 			client = ApiClient(self.console.core_url)
 			for name in params:
-				client.load_module(name)
+				return client.load_module(name)
+#				if msg: print msg
 
-	def complete(self, line, text):
-		return self.match_modules(text)
 
 class Remove(Config):
-	pass
+	def execute(self, params=None):
+		if self.check_status():
+			client = ApiClient(self.console.core_url)
+			for name in params:
+				client.remove_module(name)
+

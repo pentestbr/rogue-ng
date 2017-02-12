@@ -1,4 +1,5 @@
-from flask_restful import fields, marshal_with, abort, reqparse, request, Resource 
+from flask_restful import inputs, fields, marshal_with, abort, reqparse, request 
+from flask_restful import Resource 
 from flask_restful_swagger import swagger
 
 @swagger.model
@@ -17,7 +18,7 @@ class ModuleList(Resource):
 						help='Required field', 
 						required=True)
 		self.create_parser.add_argument('config')
-		self.create_parser.add_argument('used')
+		self.create_parser.add_argument('used', type=inputs.boolean)
 
         @swagger.operation(
                 notes='Lists the current modules',
@@ -86,6 +87,7 @@ class Module(Resource):
 	@marshal_with(ModuleModel.resource_fields)
 	def get(self, name):
 		if name in self.server.modules:
-			return self.server.modules[name], 200
+			module = self.server.modules[name]
+			return module, 200
 		else:
 			abort(404, message='Module {} does not exist'.format(name))

@@ -27,16 +27,22 @@ class ApiClient:
 		return self.putpost(path, content, 'POST')
 
 
-	def load_module(self, name):
-		response, content = self.put('/modules', {'name': name, 'used':True})
+	def update_module_use(self, name, state):
+		response, content = self.put('/modules', {'name': name, 'used': state})
 		if response.status == 200:
 			return None
-		elif response.status == 400:
+		elif response.status == 404:
 			return 'Unknown module:', name
 		else:
 			print content
 			raise RogueError('Unexpected response from server: '
 					 + str(response.status))
+
+	def load_module(self, name):
+		return self.update_module_use(name, True)
+
+	def remove_module(self, name):
+		return self.update_module_use(name, False)
 
 	def list_modules(self):
 		response, content = self.get('/modules')
