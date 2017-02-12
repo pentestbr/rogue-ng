@@ -3,11 +3,9 @@ from datetime import datetime
 from exceptions import InvalidActionException
 from request_processing import RequestProcessor
 
-from modules.hotspot import Hotspot 
+import modules
 
 class Server:
-
-	
 
 	def __init__(self):
 		self.enabled = False #todo: detect rather than insist
@@ -22,7 +20,9 @@ class Server:
 
 	def load_modules(self):
 		self.module_handlers = {
-			'hotspot': Hotspot()
+			'hotspot': modules.hotspot.Hotspot(),
+			'mitmf': modules.mitmf.Mitmf(),
+			'beef': modules.beef.Beef()
 		}
 		for name in self.module_handlers.keys():
 			self.modules[name] = {'name':name, 'config':None, 'used':False}
