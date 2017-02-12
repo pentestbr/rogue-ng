@@ -28,7 +28,8 @@ class ApiClient:
 
 
 	def update_module_use(self, name, state):
-		response, content = self.put('/modules', {'name': name, 'used': state})
+		response, content = self.post('/modules/'+name,
+					      {'name': name, 'used': state})
 		if response.status == 200:
 			return None
 		elif response.status == 404:
