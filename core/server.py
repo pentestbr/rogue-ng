@@ -1,3 +1,5 @@
+import atexit
+
 from datetime import datetime
 
 from exceptions import InvalidActionException, UnknownModule
@@ -12,7 +14,12 @@ class Server:
 		self.request_processor = RequestProcessor()
 		self.modules={}
 		self.load_modules()
+		self.request_processor.start()
+		atexit.register(self.exit)
 
+	def exit(self):
+		print 'Stopping Request Processor'
+		self.request_processor.stop()
 
 	def load_modules(self):
 		self.module_handlers = {
@@ -25,15 +32,13 @@ class Server:
 
 	def create_request(self, action):
 		if self.request_processor.isValid(action):
-			if len(self.request_processor.requests) == 0:
-				id = 1
-			else:
-				id = int(max(self.request_processor.requests.keys()))+1
-			req = {'id': id,
+
+			req = {'id': -1,
 				'created': datetime.now(),
 			       'action': action,
 			       'complete': False}
-			self.request_processor.requests[id] = req
+#			self.request_processor.requests[id] = req
+			self.request_processor.add_request(req)
 			return req
 		else:
 			raise InvalidActionException("Unknown action: "+action)
