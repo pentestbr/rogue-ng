@@ -1,4 +1,3 @@
-import atexit
 
 from datetime import datetime
 
@@ -15,7 +14,6 @@ class Server:
 		self.modules={}
 		self.load_modules()
 		self.request_processor.start()
-		atexit.register(self.exit)
 
 	def exit(self):
 		print 'Stopping Request Processor'
